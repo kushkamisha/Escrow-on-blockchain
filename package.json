@@ -4,29 +4,27 @@
   "description": "Escrow on Blockchain",
   "main": "index.js",
   "scripts": {
-    "test": "npx hardhat test",
-    "lint": "npx eslint . && npx solhint contracts/**/*.sol",
-    "build": "npx hardhat compile",
-    "eth:node": "npx hardhat node"
+    "test": "npx truffle test",
+    "lint": "npx eslint . && npx solhint contracts/**/*.sol"
   },
   "keywords": [],
   "author": "Misha Kushka",
   "license": "ISC",
   "devDependencies": {
-    "@nomiclabs/buidler": "^1.4.8",
-    "@nomiclabs/hardhat-ethers": "^2.0.0",
-    "@openzeppelin/buidler-upgrades": "^1.2.1",
+    "@openzeppelin/truffle-upgrades": "^1.2.2",
+    "@truffle/hdwallet-provider": "^1.2.0",
     "chai": "^4.2.0",
-    "eslint": "^7.13.0",
-    "eslint-config-airbnb-base": "^14.2.1",
+    "dotenv": "^8.2.0",
+    "eslint": "7.2.0",
+    "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.1.4",
-    "ethers": "^5.0.19",
-    "hardhat": "^2.0.2",
-    "mocha": "^8.2.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "4.0.0",
     "prettier": "^2.1.2",
-    "solc": "^0.7.4",
-    "solhint": "^3.3.2"
+    "solhint": "^3.3.2",
+    "truffle": "^5.1.52"
   }
 }
