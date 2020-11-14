@@ -73,6 +73,17 @@ contract('Escrow', ([seller, intermediate, buyer, other]) => {
       await expectRevert(this.escrow.removeBuyer(), 'The buyer still has time to pay')
     })
 
+    it('Cannot remove a buyer if the house was already sold', async () => {
+      // Selling a house
+      await this.escrow.becomeBuyer({ from: buyer })
+      await this.escrow.send(this.price, { from: buyer })
+      await this.escrow.transferFundsToSeller({ from: intermediate })
+
+      await timeMachine.advanceTimeAndBlock(3 * SECONDS_IN_DAY)
+
+      await expectRevert(this.escrow.removeBuyer(), 'The house is already sold')
+    })
+
     it('Should remove a buyer if time to pay has passed', async () => {
       const value = new BN(web3.utils.toWei('1', 'ether'))
 

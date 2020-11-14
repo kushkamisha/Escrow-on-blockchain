@@ -19,6 +19,11 @@ contract Escrow is Initializable {
         _;
     }
 
+    event NewBuyer(address);
+    event RemoveBuyer(address);
+    event TransferFundsToSeller(address, uint256);
+    event Payment(address, uint256);
+
     function initialize(
         address payable seller_,
         address intermediate_,
@@ -38,23 +43,32 @@ contract Escrow is Initializable {
         require(isSold == false, "The house is already sold");
         payTimeLimit = block.timestamp + 3 days;
         buyer = msg.sender;
+
+        emit NewBuyer(buyer);
     }
     
     function removeBuyer() public {
         require(block.timestamp >= payTimeLimit, "The buyer still has time to pay");
+        require(isSold == false, "The house is already sold");
+
         address payable oldBuyer = buyer;
         buyer = address(0);
         _payBackToBuyer(oldBuyer);
+
+        emit RemoveBuyer(oldBuyer);
     }
     
     function transferFundsToSeller() onlyIntermediate public {
         require(address(this).balance >= price, "The buyer has not payed enough");
         isSold = true;
         seller.transfer(address(this).balance);
+
+        emit TransferFundsToSeller(seller, address(this).balance);
     }
 
     receive() external payable {
         require(msg.sender == buyer, "Only buyer can send Ether");
+        emit Payment(msg.sender, msg.value);
     }
     
     function _payBackToBuyer(address payable oldBuyer) internal {
