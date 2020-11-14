@@ -38,11 +38,6 @@ contract('Escrow', ([seller, intermediate, buyer, other]) => {
   })
 
   describe('Become a buyer', async () => {
-    it('Should become a buyer successfully', async () => {
-      await this.escrow.becomeBuyer({ from: buyer })
-      expect(await this.escrow.buyer()).to.equal(buyer)
-    })
-
     it('Cannot become a buyer if there is already a buyer', async () => {
       await this.escrow.becomeBuyer({ from: buyer })
       await expectRevert(this.escrow.becomeBuyer({ from: other }), 'There is alredy a buyer')
@@ -56,24 +51,20 @@ contract('Escrow', ([seller, intermediate, buyer, other]) => {
 
       await expectRevert(this.escrow.becomeBuyer({ from: other }), 'There is alredy a buyer')
     })
+
+    it('Should become a buyer successfully', async () => {
+      await expectEvent(await this.escrow.becomeBuyer({ from: buyer }), 'NewBuyer', { buyer })
+      expect(await this.escrow.buyer()).to.equal(buyer)
+    })
   })
 
   describe('Remove a buyer', async () => {
-    it('Should remove a buyer if there is no buyer', async () => {
-      const before = { buyer: await this.escrow.buyer() }
-      await this.escrow.removeBuyer()
-      const after = { buyer: await this.escrow.buyer() }
-
-      expect(after.buyer).to.equal(ZERO_ADDRESS)
-      expect(after.buyer).to.equal(before.buyer)
-    })
-
     it('Cannot remove a buyer if it still has time to pay', async () => {
       await this.escrow.becomeBuyer({ from: buyer })
       await expectRevert(this.escrow.removeBuyer(), 'The buyer still has time to pay')
     })
 
-    it('Cannot remove a buyer if the house was already sold', async () => {
+    it('Cannot remove a buyer if the house is already sold', async () => {
       // Selling a house
       await this.escrow.becomeBuyer({ from: buyer })
       await this.escrow.send(this.price, { from: buyer })
@@ -82,6 +73,17 @@ contract('Escrow', ([seller, intermediate, buyer, other]) => {
       await timeMachine.advanceTimeAndBlock(3 * SECONDS_IN_DAY)
 
       await expectRevert(this.escrow.removeBuyer(), 'The house is already sold')
+    })
+
+    it('Should remove a buyer if there is no buyer', async () => {
+      const before = { buyer: await this.escrow.buyer() }
+      
+      await expectEvent(await this.escrow.removeBuyer(), 'RemoveBuyer', { buyer: ZERO_ADDRESS })
+
+      const after = { buyer: await this.escrow.buyer() }
+
+      expect(after.buyer).to.equal(ZERO_ADDRESS)
+      expect(after.buyer).to.equal(before.buyer)
     })
 
     it('Should remove a buyer if time to pay has passed', async () => {
@@ -98,7 +100,7 @@ contract('Escrow', ([seller, intermediate, buyer, other]) => {
 
       await timeMachine.advanceTimeAndBlock(3 * SECONDS_IN_DAY)
 
-      await this.escrow.removeBuyer()
+      await expectEvent(await this.escrow.removeBuyer(), 'RemoveBuyer', { buyer })
       await this.escrow.becomeBuyer({ from: other })
 
       const after = {
@@ -128,19 +130,15 @@ contract('Escrow', ([seller, intermediate, buyer, other]) => {
     })
 
     it('Only buyer can send Ethers to the contract', async () => {
-      const before = {
-        contract: new BN(await web3.eth.getBalance(this.escrow.address)),
-      }
+      const beforeContractBalance = new BN(await web3.eth.getBalance(this.escrow.address))
       const value = new BN(web3.utils.toWei('1', 'ether'))
 
       await this.escrow.becomeBuyer({ from: buyer })
-      await this.escrow.send(value, { from: buyer })
+      await expectEvent(await this.escrow.send(value, { from: buyer }), 'Payment', { payer: buyer, value })
 
-      const after = {
-        contract: new BN(await web3.eth.getBalance(this.escrow.address)),
-      }
+      const afterContractBalance = new BN(await web3.eth.getBalance(this.escrow.address))
 
-      expect(after.contract.sub(before.contract)).to.be.bignumber.equal(value)
+      expect(afterContractBalance.sub(beforeContractBalance)).to.be.bignumber.equal(value)
     })
   })
 
@@ -162,26 +160,17 @@ contract('Escrow', ([seller, intermediate, buyer, other]) => {
 
       await this.escrow.becomeBuyer({ from: buyer })
       await this.escrow.send(moreThanPrice, { from: buyer })
-      await this.escrow.transferFundsToSeller({ from: intermediate })
+      await expectEvent(
+        await this.escrow.transferFundsToSeller({ from: intermediate }),
+        'TransferFundsToSeller',
+        { seller, value: moreThanPrice }
+      )
 
       const afterSellerBalance = new BN(await web3.eth.getBalance(seller))
       const isSold = await this.escrow.isSold()
 
       expect(isSold).to.equal(true)
       expect(afterSellerBalance.sub(beforeSellerBalance)).to.be.bignumber.equal(moreThanPrice)
-    })
-  })
-
-  describe('Receive funds', async () => {
-    it('The contract should receive Ethers', async () => {
-      const value = new BN(web3.utils.toWei('2', 'ether'))
-      const beforeContractBalance = new BN(await web3.eth.getBalance(this.escrow.address))
-
-      await this.escrow.becomeBuyer({ from: buyer })
-      await this.escrow.send(value, { from: buyer })
-
-      const afterContractBalance = new BN(await web3.eth.getBalance(this.escrow.address))
-      expect(afterContractBalance.sub(beforeContractBalance)).to.be.bignumber.equal(value)
     })
   })
 })

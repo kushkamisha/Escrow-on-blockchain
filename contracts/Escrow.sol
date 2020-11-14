@@ -19,10 +19,10 @@ contract Escrow is Initializable {
         _;
     }
 
-    event NewBuyer(address);
-    event RemoveBuyer(address);
-    event TransferFundsToSeller(address, uint256);
-    event Payment(address, uint256);
+    event NewBuyer(address buyer);
+    event RemoveBuyer(address buyer);
+    event TransferFundsToSeller(address seller, uint256 value);
+    event Payment(address payer, uint256 value);
 
     function initialize(
         address payable seller_,
@@ -61,9 +61,8 @@ contract Escrow is Initializable {
     function transferFundsToSeller() onlyIntermediate public {
         require(address(this).balance >= price, "The buyer has not payed enough");
         isSold = true;
-        seller.transfer(address(this).balance);
-
         emit TransferFundsToSeller(seller, address(this).balance);
+        seller.transfer(address(this).balance);
     }
 
     receive() external payable {
