@@ -6,12 +6,18 @@ const web3 = require('../utils/test')
 
 const Escrow = artifacts.require('Escrow')
 
+const SECONDS_IN_DAY = 86400
+
 contract('Escrow', ([seller, intermediate, buyer, other]) => {
   before(async () => {
+    this.houseId = '123'
+    this.houseAddress = '401 Seventh Avenue, New York, NY'
     this.price = new BN(web3.utils.toWei('100', 'ether'))
     this.escrow = await Escrow.new()
-    await this.escrow.initialize(seller, intermediate, this.price)
+    await this.escrow.initialize(seller, intermediate, this.houseId, this.houseAddress, this.price)
+  })
 
+  beforeEach(async () => {
     const snapshot = await timeMachine.takeSnapshot()
     this.snapshotId = snapshot.result
   })
@@ -20,31 +26,84 @@ contract('Escrow', ([seller, intermediate, buyer, other]) => {
     await timeMachine.revertToSnapshot(this.snapshotId)
   })
 
+  /**
+   * Constructor
+   */
+
   it('Should be initialized with correct values', async () => {
+    expect(await this.escrow.seller()).to.equal(seller)
+    expect(await this.escrow.intermediate()).to.equal(intermediate)
     expect(await this.escrow.buyer()).to.equal(ZERO_ADDRESS)
+    expect(await this.escrow.houseId()).to.be.bignumber.equal(new BN(this.houseId))
+    expect(await this.escrow.houseAddress()).to.equal(this.houseAddress)
     expect(await this.escrow.price()).to.be.bignumber.equal(this.price)
   })
 
-  it('Should become buyer successfully', async () => {
+  /**
+   * Become a buyer
+   */
+
+  it('Should become a buyer successfully', async () => {
     await this.escrow.becomeBuyer({ from: buyer })
     expect(await this.escrow.buyer()).to.equal(buyer)
+  })
+
+  it('Cannot become a buyer if there is already a buyer', async () => {
+    await this.escrow.becomeBuyer({ from: buyer })
+    await expectRevert(this.escrow.becomeBuyer({ from: other }), 'There is alredy a buyer')
+  })
+
+  it('Cannot become a buyer if the house was already sold', async () => {
+    // Selling a house
+    await this.escrow.becomeBuyer({ from: buyer })
+    await this.escrow.send(this.price, { from: buyer })
+    await this.escrow.transferFundsToSeller({ from: intermediate })
+
+    await expectRevert(this.escrow.becomeBuyer({ from: other }), 'There is alredy a buyer')
+  })
+
+  /**
+   * Remove a buyer
+   */
+
+  it('Should remove a buyer if there is no buyer', async () => {
+    const before = { buyer: await this.escrow.buyer() }
+    await this.escrow.removeBuyer()
+    const after = { buyer: await this.escrow.buyer() }
+
+    expect(after.buyer).to.equal(ZERO_ADDRESS)
+    expect(after.buyer).to.equal(before.buyer)
+  })
+
+  it('Cannot remove a buyer if it still has time to pay', async () => {
+    await this.escrow.becomeBuyer({ from: buyer })
+    await expectRevert(this.escrow.removeBuyer(), 'The buyer still has time to pay')
+  })
+
+  it('Should remove a buyer if time to pay has passed', async () => {
+    await this.escrow.becomeBuyer({ from: buyer })
+    const buyerBefore = await this.escrow.buyer()
+
+    await timeMachine.advanceTimeAndBlock(3 * SECONDS_IN_DAY)
+
+    await this.escrow.removeBuyer()
+    await this.escrow.becomeBuyer({ from: other })
+    const buyerAfter = await this.escrow.buyer()
+
+    expect(buyerBefore).to.equal(buyer)
+    expect(buyerAfter).to.equal(other)
   })
 
   it('Non-buyer cannot send Ethers to the contract', async () => {
     const before = {
       contract: await web3.eth.getBalance(this.escrow.address),
     }
-    await expectRevert(
-      this.escrow.send(web3.utils.toWei('1', 'ether'), { from: other }),
-      'Only buyer can send Ether',
-    )
+    await expectRevert(this.escrow.send(web3.utils.toWei('1', 'ether'), { from: other }), 'Only buyer can send Ether')
     const after = {
       contract: await web3.eth.getBalance(this.escrow.address),
     }
 
-    expect(after.contract, 'Contract balance should not change').to.equal(
-      before.contract,
-    )
+    expect(after.contract, 'Contract balance should not change').to.equal(before.contract)
   })
 
   it('Only buyer can send Ethers to the contract', async () => {

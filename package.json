@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npx truffle test",
-    "lint": "npx eslint . && npx solhint contracts/**/*.sol"
+    "lint": "npx eslint . && npx solhint contracts/**/*.sol",
+    "ganache": "npx ganache-cli --defaultBalanceEther 10000"
   },
   "keywords": [],
   "author": "Misha Kushka",
