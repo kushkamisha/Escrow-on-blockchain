@@ -7,6 +7,7 @@
   "settings": {
     "solidity.compileUsingRemoteVersion": "v0.7.4",
     "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "solidity.lintOnSave": true,
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true

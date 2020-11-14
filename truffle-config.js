@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config()
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -19,7 +19,7 @@ require('dotenv').config();
  *
  */
 
-const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require('@truffle/hdwallet-provider')
 // const infuraKey = "fj4jll3k.....";
 //
 // const fs = require('fs');
@@ -44,9 +44,9 @@ module.exports = {
     // options below to some value.
     //
     development: {
-      host: "127.0.0.1",     // Localhost (default: none)
-      port: process.env.GANACHE_PORT || 7545,            // Standard Ethereum port (default: none)
-      network_id: "*",       // Any network (default: none)
+      host: '127.0.0.1', // Localhost (default: none)
+      port: process.env.GANACHE_PORT || 7545, // Standard Ethereum port (default: none)
+      network_id: '*', // Any network (default: none)
     },
     // test: {
     //   host: '127.0.0.1',
@@ -64,41 +64,45 @@ module.exports = {
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
     ropsten: {
-      provider: () => new HDWalletProvider(
-        process.env.ROPSTEN_PRIVATE_KEY,
-        `https://ropsten.infura.io/v3/${process.env.INFURA_API_KEY}`
-      ),
-      network_id: 3,       // Ropsten's id
+      provider: () =>
+        new HDWalletProvider(
+          process.env.ROPSTEN_PRIVATE_KEY,
+          `https://ropsten.infura.io/v3/${process.env.INFURA_API_KEY}`,
+        ),
+      network_id: 3, // Ropsten's id
       gas: 7500000,
-      gasPrice: 10000000000
+      gasPrice: 10000000000,
     },
     rinkeby: {
-      provider: () => new HDWalletProvider(
-        process.env.RINKEBY_PRIVATE_KEY,
-        `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`
-      ),
-      network_id: 4,       // Rinkeby's id
+      provider: () =>
+        new HDWalletProvider(
+          process.env.RINKEBY_PRIVATE_KEY,
+          `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`,
+        ),
+      network_id: 4, // Rinkeby's id
       gas: 9000000,
-      gasPrice: 10000000000
+      gasPrice: 10000000000,
     },
     kovan: {
-      provider: () => new HDWalletProvider(
-        process.env.KOVAN_PRIVATE_KEY,
-        `https://kovan.infura.io/v3/${process.env.INFURA_API_KEY}`
-      ),
-      network_id: 42,       // Kovan's id
+      provider: () =>
+        new HDWalletProvider(
+          process.env.KOVAN_PRIVATE_KEY,
+          `https://kovan.infura.io/v3/${process.env.INFURA_API_KEY}`,
+        ),
+      network_id: 42, // Kovan's id
       gas: 12000000,
-      gasPrice: 10000000000
+      gasPrice: 10000000000,
     },
     main: {
-      provider: () => new HDWalletProvider(
-        process.env.MAINNET_PRIVATE_KEY,
-        `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`
-      ),
+      provider: () =>
+        new HDWalletProvider(
+          process.env.MAINNET_PRIVATE_KEY,
+          `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+        ),
       network_id: 1,
       gas: 12000000,
-      gasPrice: 10000000000
-    }
+      gasPrice: 10000000000,
+    },
     // Useful for private networks
     // private: {
     // provider: () => new HDWalletProvider(mnemonic, `https://network.io`),
@@ -115,7 +119,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.7.0",    // Fetch exact version from solc-bin (default: truffle's version)
+      version: '0.6.12', // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
@@ -124,6 +128,6 @@ module.exports = {
       //  },
       //  evmVersion: "byzantium"
       // }
-    }
-  }
-};
+    },
+  },
+}

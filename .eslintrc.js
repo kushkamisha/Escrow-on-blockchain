@@ -1,17 +1,21 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
+    es2020: true,
     mocha: true,
+  },
+  globals: {
+    contract: 'readonly',
+    artifacts: 'readonly',
   },
   plugins: ['prettier'],
   extends: ['airbnb-base', 'prettier'],
-  globals: ['ethers'],
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module',
   },
   rules: {
     'prettier/prettier': ['error'],
+    semi: ['error', 'never'],
   },
 }
