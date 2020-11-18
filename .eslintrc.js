@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     es2020: true,
     mocha: true,
+    jquery: true,
   },
   globals: {
     contract: 'readonly',
