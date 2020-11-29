@@ -9,7 +9,7 @@ contract Escrow is Initializable {
     address payable public buyer;
     uint256 public price;
 
-    bool public isSold = false;
+    bool public isSold;
     uint256 public houseId;
     string public houseAddress;
     uint256 public payTimeLimit;
@@ -31,6 +31,7 @@ contract Escrow is Initializable {
         string memory houseAddress_,
         uint256 price_
     ) public initializer {
+        isSold = false;
         seller = seller_;
         intermediate = intermediate_;
         houseId = houseId_;
