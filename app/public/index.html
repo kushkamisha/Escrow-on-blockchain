@@ -12,14 +12,14 @@
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
-    <link href="css/shop-homepage.css" rel="stylesheet" />
+    <link href="css/shop.css" rel="stylesheet" />
   </head>
 
   <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">Start Bootstrap</a>
+        <a class="navbar-brand" href="/">Escrow on Blockchain</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -225,27 +225,32 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
+      const title = 'House 1'
+      const image = 'img/house-1.jpg'
+      const link = 'item.html'
+      const price = '500,000'
+      const description =
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! \
+Lorem ipsum dolor sit amet.'
+
       $('#available-houses').append(
-        '\
+        `\
       <div class="col-lg-4 col-md-6 mb-4">\
               <div class="card h-100">\
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt="" /></a>\
+                <a href="${link}"><img class="card-img-top" src="${image}" alt="" /></a>\
                 <div class="card-body">\
                   <h4 class="card-title">\
-                    <a href="#">Item Two</a>\
+                    <a href="${link}">${title}</a>\
                   </h4>\
-                  <h5>$24.99</h5>\
-                  <p class="card-text">\
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor\
-                    sit amet.\
-                  </p>\
+                  <h5>$${price}</h5>\
+                  <p class="card-text">${description}</p>\
                 </div>\
                 <div class="card-footer">\
                   <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>\
                 </div>\
               </div>\
             </div>\
-      ',
+      `,
       )
     </script>
   </body>
