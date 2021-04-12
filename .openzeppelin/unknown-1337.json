@@ -1,0 +1,155 @@
+{
+  "manifestVersion": "3.1",
+  "impls": {
+    "07e40b50df5d2cd1476c8793c718f1f564b39fa4e81351bf42519bf065e4f7fa": {
+      "address": "0x52f5927201D38Cf35A5Acb49Dc2764771B06fa07",
+      "txHash": "0x856ee5ffe16ddcb8fd6ad446bc34a08147dc28da89403d8b393af5b75d9febae",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol:26"
+          },
+          {
+            "contract": "Initializable",
+            "label": "______gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol:61"
+          },
+          {
+            "contract": "Escrow",
+            "label": "seller",
+            "type": "t_address_payable",
+            "src": "Escrow.sol:7"
+          },
+          {
+            "contract": "Escrow",
+            "label": "intermediate",
+            "type": "t_address",
+            "src": "Escrow.sol:8"
+          },
+          {
+            "contract": "Escrow",
+            "label": "buyer",
+            "type": "t_address_payable",
+            "src": "Escrow.sol:9"
+          },
+          {
+            "contract": "Escrow",
+            "label": "price",
+            "type": "t_uint256",
+            "src": "Escrow.sol:10"
+          },
+          {
+            "contract": "Escrow",
+            "label": "isSold",
+            "type": "t_bool",
+            "src": "Escrow.sol:12"
+          },
+          {
+            "contract": "Escrow",
+            "label": "houseId",
+            "type": "t_uint256",
+            "src": "Escrow.sol:13"
+          },
+          {
+            "contract": "Escrow",
+            "label": "houseAddress",
+            "type": "t_string_storage",
+            "src": "Escrow.sol:14"
+          },
+          {
+            "contract": "Escrow",
+            "label": "payTimeLimit",
+            "type": "t_uint256",
+            "src": "Escrow.sol:15"
+          }
+        ],
+        "types": {
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "fa24c3425b1941bec5d55810bf7913c06fc06c81f85b84fac5e1397857c89134": {
+      "address": "0x3FC3FbD33b1670ac246fB74Eb920577eb88c92af",
+      "txHash": "0xc605339b4d3efb45cc92b745fca0395b3c043ebac677c2a7da79833af43b6d83",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol:26"
+          },
+          {
+            "contract": "Initializable",
+            "label": "______gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol:61"
+          },
+          {
+            "contract": "Registry",
+            "label": "escrowAddrs",
+            "type": "t_array(t_address)dyn_storage",
+            "src": "Registry.sol:7"
+          },
+          {
+            "contract": "Registry",
+            "label": "escrow",
+            "type": "t_mapping(t_uint256,t_address)",
+            "src": "Registry.sol:8"
+          }
+        ],
+        "types": {
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    }
+  },
+  "admin": {
+    "address": "0x0d07f8A21D6CB5eDE0D4E40BfbF2D163b41ae425",
+    "txHash": "0x3b5d39e7760e6fb4ba4f5e2424beb7a0c82c3d0017254e3993442f2cf57f20c0"
+  }
+}

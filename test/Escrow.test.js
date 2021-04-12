@@ -77,7 +77,7 @@ contract('Escrow', ([seller, intermediate, buyer, other]) => {
 
     it('Should remove a buyer if there is no buyer', async () => {
       const before = { buyer: await this.escrow.buyer() }
-      
+
       await expectEvent(await this.escrow.removeBuyer(), 'RemoveBuyer', { buyer: ZERO_ADDRESS })
 
       const after = { buyer: await this.escrow.buyer() }
