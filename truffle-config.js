@@ -85,10 +85,7 @@ module.exports = {
     },
     kovan: {
       provider: () =>
-        new HDWalletProvider(
-          process.env.KOVAN_PRIVATE_KEY,
-          `https://kovan.infura.io/v3/${process.env.INFURA_API_KEY}`,
-        ),
+        new HDWalletProvider(process.env.KOVAN_PRIVATE_KEY, `https://kovan.infura.io/v3/${process.env.INFURA_API_KEY}`),
       network_id: 42, // Kovan's id
       gas: 12000000,
       gasPrice: 10000000000,

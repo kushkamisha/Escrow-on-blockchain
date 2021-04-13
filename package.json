@@ -8,6 +8,7 @@
     "start": "npx nodemon server.js",
     "lint": "npx eslint . && npx solhint contracts/**/*.sol",
     "deploy:dev": "npx truffle deploy --network=development",
+    "deploy:rinkeby": "npx truffle deploy --network=rinkeby",
     "ganache": "npx ganache-cli --defaultBalanceEther 10000"
   },
   "keywords": [],

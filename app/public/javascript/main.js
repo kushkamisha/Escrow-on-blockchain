@@ -1,3 +1,9 @@
+/**
+ * Kovan
+ *
+ * Regisry: 0x76Dad7E1DF4aA8Fd50FD8754FB32b8cFdcDb8DC5
+ */
+
 async function initialize(provider) {
   console.log(provider.isConnected())
   const accounts = await provider.request({ method: 'eth_accounts' })
