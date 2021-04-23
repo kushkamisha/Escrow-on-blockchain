@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.6.12;
 
-import "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol";
-
-contract Registry is Initializable {
+contract Registry {
     address[] public escrowAddrs;
 
     function getNumOfEscrow() public view returns(uint256) {

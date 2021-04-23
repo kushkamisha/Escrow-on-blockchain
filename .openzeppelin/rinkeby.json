@@ -1,52 +1,9 @@
 {
   "manifestVersion": "3.1",
   "impls": {
-    "149b525176927b93270e77ab7dd77aab7b55aeafc04f3d2190409af302ee9712": {
-      "address": "0xC12939F5a1f5c370FB695A162cb83A39B80725b8",
-      "txHash": "0xea680c1ddb9683aa3eb9a0dff4fa5dccf2a4d57eb5ad573b3ca0463156f00fd8",
-      "layout": {
-        "storage": [
-          {
-            "contract": "Initializable",
-            "label": "initialized",
-            "type": "t_bool",
-            "src": "../@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol:21"
-          },
-          {
-            "contract": "Initializable",
-            "label": "initializing",
-            "type": "t_bool",
-            "src": "../@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol:26"
-          },
-          {
-            "contract": "Initializable",
-            "label": "______gap",
-            "type": "t_array(t_uint256)50_storage",
-            "src": "../@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol:61"
-          },
-          {
-            "contract": "Registry",
-            "label": "escrowAddrs",
-            "type": "t_array(t_address)dyn_storage",
-            "src": "Registry.sol:7"
-          }
-        ],
-        "types": {
-          "t_array(t_address)dyn_storage": {
-            "label": "address[]"
-          },
-          "t_bool": {
-            "label": "bool"
-          },
-          "t_array(t_uint256)50_storage": {
-            "label": "uint256[50]"
-          }
-        }
-      }
-    },
     "07e40b50df5d2cd1476c8793c718f1f564b39fa4e81351bf42519bf065e4f7fa": {
-      "address": "0x9B43aE37bA13055eFEaE2c03DceE4f9b76B25aD8",
-      "txHash": "0xab0eb34a088cef7e2a8a5a7751c36e6f07f2068c456a43ac9b7989b92f5a76f4",
+      "address": "0xa1D6bB45C8c179880EaF692963c40fD022A64f65",
+      "txHash": "0xfb25f7d61f1a224d71ca03f217ee5a8eda74bea74636a83e022ddea74a476eb6",
       "layout": {
         "storage": [
           {
@@ -140,7 +97,7 @@
     }
   },
   "admin": {
-    "address": "0x83C60a9FFeBD4B6Ee41FBe7af86D57c102C68A55",
-    "txHash": "0xe63332abc06619f44be694a563d0a045f58ed38c62da2aa7e4ea34edf5b0d1d5"
+    "address": "0x93aac64Ae1dAD534bc15d9814155112b7998CDF0",
+    "txHash": "0x2b75f951b66a3de8fbf1b1cef5d8632c4428f96b0417247304bfa497d8fc3282"
   }
 }

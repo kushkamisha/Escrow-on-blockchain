@@ -65,7 +65,9 @@ module.exports = async (deployer) => {
     ],
   ]
 
-  const registry = await deployProxy(Registry, [], { deployer })
+  await deployer.deploy(Registry)
+  const registry = await Registry.deployed()
+  console.log({ registry })
   console.log({ registry: registry.address })
 
   // eslint-disable-next-line no-restricted-syntax
