@@ -31,33 +31,31 @@ async function getAHouse(escrowAddr) {
 async function getHouses() {
   const registryAddr = '0x56024F89Ce457a653aa775626670B0A3aE5A44E8'
   const registry = new web3.eth.Contract(window.registryAbi, registryAddr)
-  const numOfEscrow = await registry.methods.getNumOfEscrow().call()
+  const numOfEscrow = parseInt(await registry.methods.getNumOfEscrow().call(), 10)
   console.log({ numOfEscrow })
 
-  const houses = []
+  const ids = new Array(numOfEscrow).fill().map((_, i) => i)
+  const escrowAddrs = await Promise.all(ids.map((i) => registry.methods.escrowAddrs(i).call()))
 
-  for (let i = 0; i < numOfEscrow; i++) {
-    const escrowAddr = await registry.methods.escrowAddrs(i).call()
-    console.log({ escrowAddr })
-    const escrow = await getEscrowInstanceByAddress(escrowAddr)
+  return Promise.all(
+    escrowAddrs.map(async (addr) => {
+      const escrow = await getEscrowInstanceByAddress(addr)
 
-    const seller = await escrow.methods.seller().call()
-    const intermediate = await escrow.methods.intermediate().call()
-    const houseId = await escrow.methods.houseId().call()
-    const houseAddress = await escrow.methods.houseAddress().call()
-    const price = await escrow.methods.price().call()
+      const seller = await escrow.methods.seller().call()
+      const intermediate = await escrow.methods.intermediate().call()
+      const houseId = await escrow.methods.houseId().call()
+      const houseAddress = await escrow.methods.houseAddress().call()
+      const price = await escrow.methods.price().call()
 
-    console.log({ seller })
-
-    houses.push({
-      seller,
-      intermediate,
-      houseId,
-      houseAddress,
-      price,
-    })
-  }
-  return houses
+      return {
+        seller,
+        intermediate,
+        houseId,
+        houseAddress,
+        price,
+      }
+    }),
+  )
 }
 
 async function initialize(provider) {
