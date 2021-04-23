@@ -95,7 +95,7 @@
           </div>
 
           <div class="row" id="available-houses">
-            <div class="col-lg-4 col-md-6 mb-4">
+            <!-- <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
                 <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt="" /></a>
                 <div class="card-body">
@@ -111,99 +111,7 @@
                   <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                 </div>
               </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt="" /></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item Two</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor
-                    sit amet.
-                  </p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt="" /></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item Three</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!
-                  </p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt="" /></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item Four</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!
-                  </p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt="" /></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item Five</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor
-                    sit amet.
-                  </p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt="" /></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item Six</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!
-                  </p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-              </div>
-            </div>
+            </div> -->
           </div>
           <!-- /.row -->
         </div>
@@ -212,8 +120,6 @@
       <!-- /.row -->
     </div>
     <!-- /.container -->
-
-    <button class="enableEthereumButton">Enable Ethereum</button>
 
     <!-- Footer -->
     <footer class="py-5 bg-dark">
@@ -228,35 +134,44 @@
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <script src="javascript/abi.js"></script>
+    <script src="javascript/houseInfo.js"></script>
     <script src="javascript/main.js"></script>
     <script>
-      const title = 'House 1'
-      const image = 'img/house-1.jpg'
-      const link = 'item.html'
-      const price = '500,000'
-      const description =
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! \
-Lorem ipsum dolor sit amet.'
+      window.onload = async () => {
+        const houses = await getHouses()
+        console.log(houses)
 
-      $('#available-houses').append(
-        `\
-      <div class="col-lg-4 col-md-6 mb-4">\
-              <div class="card h-100">\
-                <a href="${link}"><img class="card-img-top" src="${image}" alt="" /></a>\
-                <div class="card-body">\
-                  <h4 class="card-title">\
-                    <a href="${link}">${title}</a>\
-                  </h4>\
-                  <h5>$${price}</h5>\
-                  <p class="card-text">${description}</p>\
-                </div>\
-                <div class="card-footer">\
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>\
-                </div>\
-              </div>\
-            </div>\
-      `,
-      )
+        for (let i = 0; i < houses.length; i++) {
+          // const title = `House ${houses[i].houseId}`
+          const { houseId } = houses[i]
+          const image = `img/house-${houseId}.jpg`
+          const link = `item.html#${houses[i].escrowAddr}`
+          const price = `${houses[i].price / 1e18}`
+
+          console.log({ houseId })
+          console.log(window.houseInfo[houseId])
+
+          $('#available-houses').append(
+            `\
+              <div class="col-lg-4 col-md-6 mb-4">\
+                      <div class="card h-100">\
+                        <a href="${link}"><img class="card-img-top" src="${image}" alt="" /></a>\
+                        <div class="card-body">\
+                          <h4 class="card-title">\
+                            <a href="${link}">${window.houseInfo[houseId].title}</a>\
+                          </h4>\
+                          <h5>${price} ETH</h5>\
+                          <p class="card-text">${window.houseInfo[houseId].description}</p>\
+                        </div>\
+                        <div class="card-footer">\
+                          <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>\
+                        </div>\
+                      </div>\
+                    </div>\
+              `,
+          )
+        }
+      }
     </script>
   </body>
 </html>

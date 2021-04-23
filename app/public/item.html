@@ -68,7 +68,7 @@
 
         <div class="col-lg-9">
           <div class="card mt-4">
-            <img class="card-img-top img-fluid" id="house-image" src="http://placehold.it/900x400" alt="" />
+            <img class="card-img-top img-fluid" id="house-image" src="#" alt="" />
             <div class="card-body">
               <h3 class="card-title" id="house-name"></h3>
               <h4 id="house-price"></h4>
@@ -108,52 +108,47 @@
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="javascript/abi.js"></script>
+    <script src="javascript/houseInfo.js"></script>
+    <script src="javascript/main.js"></script>
     <script>
       const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1)
 
-      const houses = {
-        1: {
-          name: 'House 1',
-          image: 'img/house-1.jpg',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente \
-      dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi \
-      pariatur praesentium animi perspiciatis molestias iure, ducimus!',
-        },
-      }
+      window.onload = async () => {
+        const escrowAddr = document.location.href.split('#')[1]
+        const house = await getAHouse(escrowAddr)
+        console.log({ house })
 
-      const seller = '0x4D07e28E9EE6DC715b98f589169d7927239d7318'
-      const intermediate = '0x6d82eB95C3c3468E1815242AB375327903E5261e'
-      const houseId = 1
-      const houseAddress = '401 Seventh Avenue, New York, NY'
-      const price = 250
-      const details = {
-        seller,
-        intermediate,
-        houseId,
-        price,
-      }
+        const houseId = house.houseId
+        const details = {
+          seller: house.seller,
+          intermediate: house.intermediate,
+          houseId,
+          price: house.price,
+        }
 
-      $('title').text(name)
-      $('#house-image').attr('src', houses[houseId].image)
-      $('#house-name').text(houses[houseId].name)
-      $('#house-price').text(`${price} ETH`)
-      $('#house-description').text(houses[houseId].description)
-      $('#house-address').text(houseAddress)
+        $('title').text(name)
+        $('#house-image').attr('src', `img/house-${houseId}.jpg`)
+        $('#house-name').text(window.houseInfo[houseId].title)
+        $('#house-price').text(`${house.price} ETH`)
+        $('#house-description').text(window.houseInfo[houseId].description)
+        $('#house-address').text(house.houseAddress)
 
-      for (const [name, value] of Object.entries(details)) {
-        const width = `${value}`.match(/0x/g) ? 12 : 6
+        for (const [name, value] of Object.entries(details)) {
+          const width = `${value}`.match(/0x/g) ? 12 : 6
 
-        $('#house-details').append(`
-        <div class="p-3 col-sm-${width}">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">${capitalizeFirstLetter(name)}</h5>
-              <p class="card-text">${value}</p>
+          $('#house-details').append(`
+          <div class="p-3 col-sm-${width}">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">${capitalizeFirstLetter(name)}</h5>
+                <p class="card-text">${value}</p>
+              </div>
             </div>
           </div>
-        </div>
-      `)
+        `)
+        }
       }
     </script>
   </body>
