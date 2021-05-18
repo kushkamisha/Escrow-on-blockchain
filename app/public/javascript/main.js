@@ -52,6 +52,7 @@ async function getHouses() {
         intermediate,
         houseId,
         houseAddress,
+        escrowAddr: addr,
         price,
       }
     }),
